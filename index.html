@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta Silver Stream</title>
+    <style>
+        :root {
+            --bg-color: #0d1a1f; 
+            --gold-primary: #d4af37;
+            --gold-light: #f9e27d;
+            --text-white: #e0e0e0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-white);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--gold-primary);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+            text-align: center;
+        }
+
+        /* --- NUEVO: Estilo para imágenes una debajo de otra --- */
+        .logo-wrapper {
+            display: flex;
+            flex-direction: column; /* Alineación vertical */
+            align-items: center;    /* Centrado horizontal */
+            gap: 15px;              /* Espacio entre las imágenes */
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            width: 150px;
+            filter: drop-shadow(0 0 10px var(--gold-primary));
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            color: var(--gold-light);
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--gold-light);
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--gold-primary);
+            box-sizing: border-box;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input { background: rgba(0, 0, 0, 0.3); color: white; }
+        select { background: white; color: black; font-weight: 600; }
+
+        button {
+            background: linear-gradient(45deg, var(--gold-primary), var(--gold-light));
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            color: var(--bg-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        button:hover { transform: scale(1.02); box-shadow: 0 0 20px var(--gold-light); }
+        button:disabled { background: #555; cursor: not-allowed; opacity: 0.7; }
+
+        #successMessage {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .check-icon {
+            font-size: 60px;
+            color: var(--gold-light);
+            margin-bottom: 20px;
+        }
+
+        .hidden { display: none; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="formContainer">
+        
+        <div class="logo-wrapper">
+            <img src="Logo Silver.png" alt="Logo Principal" class="logo"style="width: 250px;">
+            
+            <img src="juegos.png" alt="Logo Secundario" class="logo" style="width: 500px;">
+        </div>
+
+        <form id="surveyForm">
+            <div class="form-group">
+                <label>1. Nombre o nickname</label>
+                <input type="text" name="Nombre" required>
+            </div>
+            <div class="form-group">
+                <label>2. Edad</label>
+                <input type="number" name="Edad" required>
+            </div>
+            <div class="form-group">
+                <label>3. País</label>
+                <input type="text" name="Pais" required>
+            </div>
+            <div class="form-group">
+                <label>4. Ciudad de residencia actual</label>
+                <input type="text" name="Ciudad" required>
+            </div>
+            <div class="form-group">
+                <label>5. ¿A qué se dedica actualmente?</label>
+                <select name="Dedicacion" id="dedicacion" onchange="checkContentCreator()" required>
+                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option value="Estudia">Estudia</option>
+                    <option value="Trabaja">Trabaja</option>
+                    <option value="Ambas">Ambas</option>
+                    <option value="Creador">Creador de contenido</option>
+                </select>
+                <input type="text" name="Plataformas" id="plataformas" class="hidden" placeholder="¿En qué plataformas?" style="margin-top:10px;">
+            </div>
+            <div class="form-group">
+                <label>6. ¿Perros o gatos?</label>
+                <select name="Mascotas" required>
+                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option value="Perros">Perros</option>
+                    <option value="Gatos">Gatos</option>
+                    <option value="Ambos">Ambos</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>7. ¿Qué es lo que realmente estás buscando?</label>
+                <select name="Busca" required>
+                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option value="Dinero">El dinero</option>
+                    <option value="Corazon">El corazón de Silver ❤️</option>
+                </select>
+            </div>
+            <button type="submit" id="submitBtn">Enviar Respuestas</button>
+        </form>
+    </div>
+
+    <div id="successMessage">
+        <div class="check-icon">✔</div>
+        <h2 style="color: var(--gold-light);">¡MUCHAS GRACIAS!</h2>
+        <p>Tus datos han sido enviados correctamente.</p>
+        <p style="color: var(--gold-primary); font-weight: bold;">Silver ha recibido tu información.</p>
+    </div>
+</div>
+
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxixFZ7qZY77to8DfvOJGoP7CBPg_rKN5g7iXEtGeUPF5WCJJ9Hj8yMEm6T1I0qwUNa/exec';
+    const form = document.getElementById('surveyForm');
+    const formContainer = document.getElementById('formContainer');
+    const successMessage = document.getElementById('successMessage');
+    const btn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        btn.disabled = true;
+        btn.innerText = "Enviando...";
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                formContainer.style.display = 'none';
+                successMessage.style.display = 'flex';
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert("Error al enviar. Inténtalo de nuevo.");
+                btn.disabled = false;
+                btn.innerText = "Enviar Respuestas";
+            });
+    });
+
+    function checkContentCreator() {
+        const select = document.getElementById('dedicacion');
+        const platformInput = document.getElementById('plataformas');
+        platformInput.classList.toggle('hidden', select.value !== 'Creador');
+    }
+</script>
+
+</body>
+</html>
