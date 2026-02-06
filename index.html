@@ -12,58 +12,72 @@
             --text-white: #e0e0e0;
         }
 
+       
+        * { box-sizing: border-box; }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-white);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 20px;
+            padding: 15px; 
         }
 
         .container {
             background: rgba(255, 255, 255, 0.05);
             border: 2px solid var(--gold-primary);
             border-radius: 20px;
-            padding: 40px;
+            padding: 30px;
             max-width: 500px;
             width: 100%;
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
             text-align: center;
+            transition: all 0.3s ease;
         }
 
        
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 15px; 
+                border-width: 1px;
+            }
+            h1 {
+                font-size: 1.4rem; 
+            }
+            label {
+                font-size: 0.9rem;
+            }
+        }
+
         .logo-wrapper {
             display: flex;
-            flex-direction: column; 
-            align-items: center;    
-            gap: 15px;             
-            margin-bottom: 25px;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
         .logo {
-            width: 150px;
-            filter: drop-shadow(0 0 10px var(--gold-primary));
-            transition: transform 0.3s;
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
+            max-width: 140px;
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 0 8px var(--gold-primary));
         }
 
         h1 {
             color: var(--gold-light);
             font-size: 1.8rem;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-align: left;
         }
 
@@ -79,22 +93,29 @@
             padding: 12px;
             border-radius: 8px;
             border: 1px solid var(--gold-primary);
-            box-sizing: border-box;
-            font-size: 1rem;
+            font-size: 16px; 
             outline: none;
         }
 
-        input { background: rgba(0, 0, 0, 0.3); color: white; }
-        select { background: white; color: black; font-weight: 600; }
+        input { background: rgba(0, 0, 0, 0.4); color: white; }
+        
+ 
+        select { 
+            background: white; 
+            color: black; 
+            font-weight: 600; 
+            cursor: pointer;
+            -webkit-appearance: none; 
+        }
 
         button {
             background: linear-gradient(45deg, var(--gold-primary), var(--gold-light));
             border: none;
-            padding: 15px 30px;
+            padding: 16px;
             border-radius: 30px;
             color: var(--bg-color);
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: 0.3s;
             width: 100%;
@@ -102,29 +123,28 @@
             margin-top: 10px;
         }
 
-        button:hover { transform: scale(1.02); box-shadow: 0 0 20px var(--gold-light); }
-        button:disabled { background: #555; cursor: not-allowed; opacity: 0.7; }
+        button:active { transform: scale(0.98); }
+        button:disabled { background: #555; opacity: 0.7; }
 
         #successMessage {
             display: none;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-            animation: fadeIn 0.8s ease;
+            padding: 30px 10px;
+            animation: fadeIn 0.6s ease;
         }
 
         .check-icon {
-            font-size: 60px;
+            font-size: 50px;
             color: var(--gold-light);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .hidden { display: none; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
@@ -132,11 +152,9 @@
 
 <div class="container">
     <div id="formContainer">
-        
         <div class="logo-wrapper">
-            <img src="Logo Silver.png" alt="Logo Principal" class="logo"style="width: 250px;">
-            
-            <img src="juegos.png" alt="Logo Secundario" class="logo" style="width: 500px;">
+            <img src="Logo Silver.png" alt="Logo Silver" class="logo" style="max-width:250px;" onerror="this.style.display='none'">
+            <img src="juegos.png" alt="" class="logo" style="max-width:450px;" onerror="this.style.display='none'">
         </div>
 
         <form id="surveyForm">
@@ -153,33 +171,33 @@
                 <input type="text" name="Pais" required>
             </div>
             <div class="form-group">
-                <label>4. Ciudad de residencia actual</label>
+                <label>4. Ciudad</label>
                 <input type="text" name="Ciudad" required>
             </div>
             <div class="form-group">
                 <label>5. ¿A qué se dedica actualmente?</label>
                 <select name="Dedicacion" id="dedicacion" onchange="checkContentCreator()" required>
-                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option value="" disabled selected>Elige una opción</option>
                     <option value="Estudia">Estudia</option>
                     <option value="Trabaja">Trabaja</option>
                     <option value="Ambas">Estudia y trabaja</option>
                     <option value="Creador">Creador de contenido</option>
                 </select>
-                <input type="text" name="Plataformas" id="plataformas" class="hidden" placeholder="¿En qué plataformas?" style="margin-top:10px;">
+                <input type="text" name="Plataformas" id="plataformas" class="hidden" placeholder="¿Qué plataformas?" style="margin-top:10px;">
             </div>
             <div class="form-group">
                 <label>6. ¿Perros o gatos?</label>
                 <select name="Mascotas" required>
-                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option value="" disabled selected>Elige una opción</option>
                     <option value="Perros">Perros</option>
                     <option value="Gatos">Gatos</option>
                     <option value="Ambos">Ambos</option>
                 </select>
             </div>
             <div class="form-group">
-                <label>7. ¿Qué es lo que realmente estás buscando?</label>
+                <label>7. ¿Qué es lo que realmente estás buscando? (Silver no sabrá este dato)</label>
                 <select name="Busca" required>
-                    <option value="" disabled selected>Selecciona una opción</option>
+                    <option value="" disabled selected>Elige una opción</option>
                     <option value="Dinero">El dinero</option>
                     <option value="Corazon">El corazón de Silver ❤️</option>
                 </select>
@@ -190,9 +208,9 @@
 
     <div id="successMessage">
         <div class="check-icon">✔</div>
-        <h2 style="color: var(--gold-light);">¡MUCHAS GRACIAS!</h2>
-        <p>Tus datos han sido enviados correctamente.</p>
-        <p style="color: var(--gold-primary); font-weight: bold;">Silver ha recibido tu información.</p>
+        <h2 style="color: var(--gold-light);">¡ENVIADO!</h2>
+        <p>Gracias por registrarte.</p>
+        <p style="color: var(--gold-primary); font-weight: bold;">Te esperamos.</p>
     </div>
 </div>
 
@@ -214,8 +232,7 @@
                 successMessage.style.display = 'flex';
             })
             .catch(error => {
-                console.error('Error!', error.message);
-                alert("Error al enviar. Inténtalo de nuevo.");
+                alert("Error al enviar. Verifica tu internet.");
                 btn.disabled = false;
                 btn.innerText = "Enviar Respuestas";
             });
